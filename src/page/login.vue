@@ -1,9 +1,10 @@
 <template>
   <div class="page-login">
     <div class="login-blank">
-      <ElImage id="login-image" src="/assets/images/bg.jpg" fit="cover" />
+      <ElImage id="login-image" @mousedown.prevent.stop @click.right.prevent.stop src="/assets/images/bg.jpg" fit="cover" />
       <ElForm id="login-form" label-position="top" :model="formData" :hide-required-asterisk="true" :rules="formData.rules" ref="loginFormRef">
         <div id="login-blank-title">管理员登录</div>
+        <div style="font-size: 14px; color: #333">使用此账号来登录书彦电脑科技博客后台</div>
         <ElFormItem label="账号" prop="username">
           <ElAutocomplete @select="validateForm" :fetch-suggestions="usernameSuggestions" placeholder="手机号 / 邮箱地址" type="text" v-model="formData.username" />
         </ElFormItem>
@@ -53,17 +54,23 @@ const formData = ref({
  */
 function usernameSuggestions(str, cb) {
   let result = [];
-  if (/^.+@/.test(str)) {
-    let values = ['163.com', '126.com', 'qq.com', 'foxmail.com', '189.cn', '139.com', 'wo.com'];
-    let match = str.match(/^(.+@)(.+)?$/);
+  const emailRegex = /^.+@/;
+  const domainValues = ['163.com', '126.com', 'qq.com', 'foxmail.com', '189.cn', '139.com', 'wo.com'];
+  if (emailRegex.test(str)) {
+    const match = str.match(/^.+@(.+)$/);
     if (match) {
-      let _result = values.filter((item) => item.indexOf(match[2]) == 0);
-      for (let i = 0; i < _result.length; i++) {
-        result.push({ value: match[1] + _result[i] });
-      }
+      const domainMatch = match[2];
+      const filteredDomains = domainValues.filter((item) => item.startsWith(domainMatch));
+      filteredDomains.forEach((domain) => {
+        result.push({ value: match[1] + domain });
+      });
+    } else {
+      domainValues.forEach((domain) => {
+        result.push({ value: str + domain });
+      });
     }
   }
-  return cb(result);
+  cb(result);
 }
 
 function Login() {

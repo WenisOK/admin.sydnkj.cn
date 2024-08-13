@@ -4,15 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.31"
+    "axios": "^1.7.3",
+    "element-plus": "^2.7.8",
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "unplugin-auto-import": "^0.18.2",
+    "unplugin-vue-components": "^0.27.3",
     "vite": "^5.3.4"
   }
 }
