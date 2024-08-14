@@ -3,3 +3,9 @@ html {
   margin: 0;
   padding: 0;
 }
+.markdown-body {
+  max-width: unset !important;
+}
+.bytemd .CodeMirror .CodeMirror-lines {
+  max-width: unset !important;
+}
